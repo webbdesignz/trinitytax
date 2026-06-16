@@ -62,7 +62,7 @@
   .booknow{text-align:center}
   .cal-shell{position:relative;margin-top:8px;border:1px solid var(--line-strong);border-radius:8px;overflow:hidden;box-shadow:0 30px 60px -46px rgba(28,42,22,.5);background:var(--white);text-align:left}
   .calendly-inline-widget{position:relative;z-index:1;min-width:320px;height:720px}
-  .cal-placeholder{position:absolute;inset:0;z-index:0;background:var(--white);display:grid;grid-template-columns:1fr 1fr}
+  .cal-placeholder{position:absolute;inset:0;z-index:3;pointer-events:none;background:var(--white);display:grid;grid-template-columns:1fr 1fr}
   .cph-left{padding:34px 30px;border-right:1px solid var(--line)}
   .cph-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
   .cph-left h3{font-size:1.5rem;margin:14px 0 6px;color:var(--green);line-height:1.12}
@@ -192,16 +192,15 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
   var ph=shell.querySelector('.cal-placeholder');
   var widget=shell.querySelector('.calendly-inline-widget');
   if(!ph||!widget) return;
-  function hideIfLoaded(){
-    if(widget.querySelector('iframe')){ ph.style.display='none'; return true; }
-    return false;
-  }
-  // watch for Calendly injecting its iframe
-  var mo=new MutationObserver(function(){ if(hideIfLoaded()) mo.disconnect(); });
+  var hidden=false;
+  function cleanup(){ try{mo.disconnect();}catch(e){} window.removeEventListener('message',onMsg); clearInterval(iv); }
+  function hide(){ if(hidden) return; if(widget.querySelector('iframe')){ ph.style.display='none'; hidden=true; cleanup(); } }
+  function onMsg(e){ if(e&&e.data&&typeof e.data==='object'&&typeof e.data.event==='string'&&e.data.event.indexOf('calendly')===0){ ph.style.display='none'; hidden=true; cleanup(); } }
+  var mo=new MutationObserver(hide);
   mo.observe(widget,{childList:true,subtree:true});
-  // fallbacks: check shortly after load, then stop watching
-  setTimeout(hideIfLoaded,1500);
-  setTimeout(function(){ hideIfLoaded(); mo.disconnect(); },8000);
+  window.addEventListener('message',onMsg);
+  var tries=0;
+  var iv=setInterval(function(){ tries++; hide(); if(tries>40) clearInterval(iv); },300);
 })();
 </script>
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script></body></html>
