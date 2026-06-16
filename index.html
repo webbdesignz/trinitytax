@@ -322,6 +322,19 @@
   }
 </style>
 <style>.about-sec{background:linear-gradient(155deg,#2f7d06 0%,#1f5304 60%,#143b03 100%);position:relative;overflow:hidden}.about-sec::before{content:"";position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.05;pointer-events:none}.about-sec > .wrap{position:relative;z-index:1}</style>
+<style>
+  .home-cta{background:linear-gradient(150deg,#39920a 0%,#2e7b06 55%,#236103 100%);color:#fff;text-align:center;position:relative;overflow:hidden}
+  .home-cta::before{content:"";position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.05;pointer-events:none}
+  .home-cta > .wrap{position:relative;z-index:1}
+  .home-cta .eyebrow{color:var(--gold-bright)}
+  .home-cta h2{color:#fff;font-size:clamp(1.9rem,3.6vw,2.7rem);margin:12px 0 12px}
+  .home-cta p{color:rgba(255,255,255,.92);max-width:52ch;margin:0 auto 26px}
+  .home-cta .btn{background:#fff;color:var(--green);border-color:#fff}
+  .home-cta .btn:hover{filter:brightness(.95)}
+</style>
+<style>
+  .cal-loading{position:absolute;inset:0;z-index:0;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.04em}
+</style>
 </head>
 <body>
 
@@ -538,28 +551,13 @@
     <div class="cal-head">
       <span class="eyebrow">Book a consultation</span>
       <h2>Grab 30 minutes with Alexander.</h2>
-      <p>A focused look at your income, entity, and goals — and the specific strategies that could keep more in your business this year. Pick a time that works; it lands straight on the calendar.</p>
+      <p>A focused look at your income, entity, and goals &mdash; and the strategies that could keep more in your business this year. $50, refunded in full when you become a client.</p>
     </div>
     <div class="cal-shell">
-      <div class="cal-placeholder" aria-hidden="true">
-        <div class="cph-left">
-          <span class="cph-eyebrow">Powered by Calendly</span>
-          <h3>30-Minute Tax Strategy Meeting</h3>
-          <div class="cph-by">with Alexander Small, CPA</div>
-          <div class="cph-facts"><span>30 min</span><span>$50 USD</span><span>Video call</span></div>
-          <p class="cph-note">A full refund is issued for everyone who becomes a client.</p>
-          <p class="cph-blurb">We'll review your personal and business financial situation, discuss your goals, and identify opportunities to reduce taxes while building long-term wealth.</p>
-        </div>
-        <div class="cph-right">
-          <div class="cph-cal-head"><span class="cph-arrow">‹</span><span class="cph-month">June 2026</span><span class="cph-arrow">›</span></div>
-          <div class="cph-week"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
-          <div class="cph-grid"><span class="cph-day cph-empty"></span><span class="cph-day">1</span><span class="cph-day">2</span><span class="cph-day">3</span><span class="cph-day">4</span><span class="cph-day">5</span><span class="cph-day">6</span><span class="cph-day">7</span><span class="cph-day">8</span><span class="cph-day">9</span><span class="cph-day">10</span><span class="cph-day">11</span><span class="cph-day">12</span><span class="cph-day">13</span><span class="cph-day">14</span><span class="cph-day">15</span><span class="cph-day cph-today">16</span><span class="cph-day">17</span><span class="cph-day">18</span><span class="cph-day">19</span><span class="cph-day">20</span><span class="cph-day">21</span><span class="cph-day cph-avail">22</span><span class="cph-day cph-avail">23</span><span class="cph-day">24</span><span class="cph-day">25</span><span class="cph-day">26</span><span class="cph-day">27</span><span class="cph-day">28</span><span class="cph-day">29</span><span class="cph-day">30</span></div>
-          <div class="cph-tz">Central Time — US &amp; Canada</div>
-        </div>
-      </div>
+      <div class="cal-loading">Loading the booking calendar&hellip;</div>
       <div class="calendly-inline-widget" data-url="https://calendly.com/asmall-trinitytaxa/30min" style="min-width:320px;height:700px;"></div>
     </div>
-    <p class="cal-fallback">Scheduler not loading? <a href="https://calendly.com/asmall-trinitytaxa/30min" target="_blank" rel="noopener">Open the booking page in a new tab →</a></p>
+    <p class="cal-fallback">Scheduler not loading? <a href="https://calendly.com/asmall-trinitytaxa/30min" target="_blank" rel="noopener">Open the booking page in a new tab &rarr;</a></p>
   </div>
 </section>
 
@@ -641,22 +639,19 @@
     });},{threshold:.4});
     go.observe(gc);}
 </script>
+
 <script>
 (function(){
   var shell=document.querySelector('.cal-shell');
   if(!shell) return;
-  var ph=shell.querySelector('.cal-placeholder');
+  var ld=shell.querySelector('.cal-loading');
   var widget=shell.querySelector('.calendly-inline-widget');
-  if(!ph||!widget) return;
-  var hidden=false;
-  function cleanup(){ try{mo.disconnect();}catch(e){} window.removeEventListener('message',onMsg); clearInterval(iv); }
-  function hide(){ if(hidden) return; if(widget.querySelector('iframe')){ ph.style.display='none'; hidden=true; cleanup(); } }
-  function onMsg(e){ if(e&&e.data&&typeof e.data==='object'&&typeof e.data.event==='string'&&e.data.event.indexOf('calendly')===0){ ph.style.display='none'; hidden=true; cleanup(); } }
-  var mo=new MutationObserver(hide);
-  mo.observe(widget,{childList:true,subtree:true});
-  window.addEventListener('message',onMsg);
-  var tries=0;
-  var iv=setInterval(function(){ tries++; hide(); if(tries>40) clearInterval(iv); },300);
+  if(!ld||!widget) return;
+  var done=false;
+  function fin(){try{mo.disconnect();}catch(e){}clearInterval(iv);}
+  function hide(){if(done)return;if(widget.querySelector('iframe')){ld.style.display='none';done=true;fin();}}
+  var mo=new MutationObserver(hide);mo.observe(widget,{childList:true,subtree:true});
+  var t=0,iv=setInterval(function(){t++;hide();if(t>40)clearInterval(iv);},300);
 })();
 </script>
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
