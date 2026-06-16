@@ -295,7 +295,7 @@
 <style>
   .cal-shell{position:relative}
   .calendly-inline-widget{position:relative;z-index:1}
-  .cal-placeholder{position:absolute;inset:0;z-index:0;background:var(--white);display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .cal-placeholder{position:absolute;inset:0;z-index:3;pointer-events:none;background:var(--white);display:grid;grid-template-columns:1fr 1fr;gap:0}
   .cph-left{padding:34px 30px;border-right:1px solid var(--line)}
   .cph-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
   .cph-left h3{font-size:1.5rem;margin:14px 0 6px;color:var(--green);line-height:1.12}
@@ -640,6 +640,24 @@
       if(e.isIntersecting&&!fired){fired=true;gc.querySelectorAll('[data-to]').forEach(countUp);}
     });},{threshold:.4});
     go.observe(gc);}
+</script>
+<script>
+(function(){
+  var shell=document.querySelector('.cal-shell');
+  if(!shell) return;
+  var ph=shell.querySelector('.cal-placeholder');
+  var widget=shell.querySelector('.calendly-inline-widget');
+  if(!ph||!widget) return;
+  var hidden=false;
+  function cleanup(){ try{mo.disconnect();}catch(e){} window.removeEventListener('message',onMsg); clearInterval(iv); }
+  function hide(){ if(hidden) return; if(widget.querySelector('iframe')){ ph.style.display='none'; hidden=true; cleanup(); } }
+  function onMsg(e){ if(e&&e.data&&typeof e.data==='object'&&typeof e.data.event==='string'&&e.data.event.indexOf('calendly')===0){ ph.style.display='none'; hidden=true; cleanup(); } }
+  var mo=new MutationObserver(hide);
+  mo.observe(widget,{childList:true,subtree:true});
+  window.addEventListener('message',onMsg);
+  var tries=0;
+  var iv=setInterval(function(){ tries++; hide(); if(tries>40) clearInterval(iv); },300);
+})();
 </script>
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
