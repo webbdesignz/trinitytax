@@ -185,4 +185,23 @@
 document.getElementById('navtoggle').addEventListener('click',function(){document.getElementById('navlinks').classList.toggle('open');});
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.15});
 document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
-</script><script src="https://assets.calendly.com/assets/external/widget.js" async></script></body></html>
+</script><script>
+(function(){
+  var shell=document.querySelector('.cal-shell');
+  if(!shell) return;
+  var ph=shell.querySelector('.cal-placeholder');
+  var widget=shell.querySelector('.calendly-inline-widget');
+  if(!ph||!widget) return;
+  function hideIfLoaded(){
+    if(widget.querySelector('iframe')){ ph.style.display='none'; return true; }
+    return false;
+  }
+  // watch for Calendly injecting its iframe
+  var mo=new MutationObserver(function(){ if(hideIfLoaded()) mo.disconnect(); });
+  mo.observe(widget,{childList:true,subtree:true});
+  // fallbacks: check shortly after load, then stop watching
+  setTimeout(hideIfLoaded,1500);
+  setTimeout(function(){ hideIfLoaded(); mo.disconnect(); },8000);
+})();
+</script>
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script></body></html>
